@@ -1,14 +1,15 @@
-import {Box3, Matrix4, Vector3} from 'three';
+import { Box3, Matrix4, Vector3 } from "three";
 
 export enum ClipMode {
-  DISABLED = 0,
-  CLIP_OUTSIDE = 1,
-  HIGHLIGHT_INSIDE = 2,
+    DISABLED = 0,
+    CLIP_OUTSIDE = 1,
+    HIGHLIGHT_INSIDE = 2,
+    REDUCE_SIZE_OUTSIDE = 3,
 }
 
 export interface IClipBox {
-  box: Box3;
-  inverse: Matrix4;
-  matrix: Matrix4;
-  position: Vector3;
+    box: Box3;
+    inverse: Matrix4;
+    matrix: Matrix4;
+    position: Vector3;
 }

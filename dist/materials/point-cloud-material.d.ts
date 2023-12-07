@@ -1,12 +1,13 @@
-import { BufferGeometry, Camera, Color, Material, RawShaderMaterial, Scene, Texture, Vector3, Vector4, WebGLRenderer } from 'three';
-import { PointCloudOctree } from '../point-cloud-octree';
-import { PointCloudOctreeNode } from '../point-cloud-octree-node';
-import { ClipMode, IClipBox } from './clipping';
-import { PointColorType, PointOpacityType, PointShape, PointSizeType, TreeType } from './enums';
-import { IClassification, IGradient, IUniform } from './types';
-import { ColorEncoding } from './color-encoding';
+import { BufferGeometry, Camera, Color, Material, RawShaderMaterial, Scene, Texture, Vector3, Vector4, WebGLRenderer } from "three";
+import { PointCloudOctree } from "../point-cloud-octree";
+import { PointCloudOctreeNode } from "../point-cloud-octree-node";
+import { ClipMode, IClipBox } from "./clipping";
+import { ColorEncoding } from "./color-encoding";
+import { PointColorType, PointOpacityType, PointShape, PointSizeType, TreeType } from "./enums";
+import { IClassification, IGradient, IUniform } from "./types";
 export interface IPointCloudMaterialParameters {
     size: number;
+    reduceSize: number;
     minSize: number;
     maxSize: number;
     treeType: TreeType;
@@ -41,6 +42,7 @@ export interface IPointCloudMaterialUniforms {
     screenHeight: IUniform<number>;
     screenWidth: IUniform<number>;
     size: IUniform<number>;
+    reduceSize: IUniform<number>;
     spacing: IUniform<number>;
     toModel: IUniform<number[]>;
     transition: IUniform<number>;
@@ -92,6 +94,7 @@ export declare class PointCloudMaterial extends RawShaderMaterial {
     screenHeight: number;
     screenWidth: number;
     size: number;
+    reduceSize: number;
     spacing: number;
     transition: number;
     color: Color;
@@ -172,8 +175,8 @@ export declare class PointCloudMaterial extends RawShaderMaterial {
     private recomputeClassification;
     get elevationRange(): [number, number];
     set elevationRange(value: [number, number]);
-    getUniform<K extends keyof IPointCloudMaterialUniforms>(name: K): IPointCloudMaterialUniforms[K]['value'];
-    setUniform<K extends keyof IPointCloudMaterialUniforms>(name: K, value: IPointCloudMaterialUniforms[K]['value']): void;
+    getUniform<K extends keyof IPointCloudMaterialUniforms>(name: K): IPointCloudMaterialUniforms[K]["value"];
+    setUniform<K extends keyof IPointCloudMaterialUniforms>(name: K, value: IPointCloudMaterialUniforms[K]["value"]): void;
     updateMaterial(octree: PointCloudOctree, visibleNodes: PointCloudOctreeNode[], camera: Camera, renderer: WebGLRenderer): void;
     private updateVisibilityTextureData;
     static makeOnBeforeRender(octree: PointCloudOctree, node: PointCloudOctreeNode, pcIndex?: number): (_renderer: WebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, material: Material) => void;

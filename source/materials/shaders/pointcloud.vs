@@ -32,6 +32,7 @@ uniform float spacing;
 uniform float heightMin;
 uniform float heightMax;
 uniform float size; // pixel size factor
+uniform float reduceSize; // pixel size factor when clip mode is clip_reduce_size_outside
 uniform float minSize; // minimum pixel size
 uniform float maxSize; // maximum pixel size
 uniform float octreeSize;
@@ -572,6 +573,10 @@ void main() {
 				gl_Position = vec4(1000.0, 1000.0, 1000.0, 1.0);
 			#elif defined clip_highlight_inside && !defined(color_type_depth)
 				float c = (vColor.r + vColor.g + vColor.b) / 6.0;
+			#endif
+
+			#if defined clip_reduce_size_outside
+				gl_PointSize = reduceSize;
 			#endif
 		} else {
 			#if defined clip_highlight_inside
